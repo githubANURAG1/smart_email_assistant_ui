@@ -6,18 +6,18 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-# Copy source code and build Angular app
+# Copy source and build Angular app
 COPY . .
 RUN npm run build --prod
 
 # Step 2: Serve with NGINX
 FROM nginx:alpine
 
-# Copy built Angular app (copies everything inside dist/)
+# Copy built Angular app
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Render sets $PORT dynamically; configure nginx to use it
-RUN sed -i "s/listen       80;/listen       \$PORT;/" /etc/nginx/conf.d/default.conf
+# Keep nginx default config (listens on 80)
+EXPOSE 80
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
