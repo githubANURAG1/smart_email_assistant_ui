@@ -1,12 +1,15 @@
-FROM node:20-alpine
-
+# Step 1: Build Angular app
+FROM node:20-alpine AS build
 WORKDIR /app
-
 COPY package*.json ./
-RUN npm install -g @angular/cli && npm install
-
+RUN npm install
 COPY . .
+RUN npm run build --prod
 
-EXPOSE 4200
+# Step 2: Serve with NGINX
+FROM nginx:alpine
+COPY --from=build /app/dist/<your-angular-project-name> /usr/share/nginx/html
 
-CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200", "--disable-host-check"]
+# Expose Render's default port
+EXPOSE 10000
+CMD ["nginx", "-g", "daemon off;"]
