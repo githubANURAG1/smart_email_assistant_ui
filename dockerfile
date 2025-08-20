@@ -8,7 +8,7 @@ RUN npm run build --prod
 
 # Step 2: Serve with NGINX
 FROM nginx:alpine
-COPY --from=build /app/dist/<your-angular-project-name> /usr/share/nginx/html
+COPY --from=build /app/dist/smart_email_assistant_ui /usr/share/nginx/html
 
 # Expose Render's default port
 EXPOSE 10000
