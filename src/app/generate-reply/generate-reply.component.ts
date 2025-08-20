@@ -21,7 +21,8 @@ ngOnInit(){
 }
 
 submitForm(form: NgForm) {
-  this.http.post<ResponseDTO>('http://localhost:8080/replyEmail/replyEmailwithAI', {
+  // this.http.post<ResponseDTO>('http://localhost:8080/replyEmail/replyEmailwithAI',
+  this.http.post<ResponseDTO>('https://email-ai-reply-backend.onrender.com/replyEmail/replyEmailwithAI', {
     //"emailBody": "hello, anurag this side, the meeting today went really well. looking forward to close the dea Thanks, Anurag rai",
     "emailBody": form.value.name,
     "tone": "formal",
